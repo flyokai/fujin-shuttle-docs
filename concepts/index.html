@@ -1,0 +1,1662 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="High-throughput CSV bulk import/export for Shopware 6 — documentation">
+      
+      
+      
+        <link rel="canonical" href="https://fujin.flyokai.com/concepts/">
+      
+      
+        <link rel="prev" href="../getting-started/">
+      
+      
+        <link rel="next" href="../data-types/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/favicon.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Concepts & architecture - Flyokai Fujin Shuttle</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/flyokai.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#concepts-architecture" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Flyokai Fujin Shuttle" class="md-header__button md-logo" aria-label="Flyokai Fujin Shuttle" data-md-component="logo">
+      
+  <img src="../assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Flyokai Fujin Shuttle
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Concepts & architecture
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/flyokai/flyokai" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    flyokai/flyokai
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../getting-started/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Getting started
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../cli/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../troubleshooting/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Troubleshooting
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../glossary/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Glossary
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Flyokai Fujin Shuttle" class="md-nav__button md-logo" aria-label="Flyokai Fujin Shuttle" data-md-component="logo">
+      
+  <img src="../assets/logo.svg" alt="logo">
+
+    </a>
+    Flyokai Fujin Shuttle
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/flyokai/flyokai" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    flyokai/flyokai
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts & architecture
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts & architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-vocabulary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The vocabulary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-big-picture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The big picture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#agents-and-deputies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agents and deputies
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-two-pass-import-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The two-pass import model
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The two-pass import model">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pass-a-resolve-references-sequential" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pass A — resolve references (sequential)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pass-b-write-rows-concurrent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pass B — write rows (concurrent)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-channel-seam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The channel seam
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The channel seam">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-47-request-handlers-grouped" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The 47 request handlers, grouped
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#depots-and-raw-bulk-sql" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Depots and raw bulk SQL
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async-in-one-paragraph" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Async, in one paragraph
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tracking-a-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tracking a run
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#source-tree-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Source-tree map
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-types/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../csv-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CSV format & columns
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../admin-ui/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Admin UI & profiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../media-import/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Media import
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Admin API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../database/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Database schema
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PERFORMANCE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Performance & tuning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-vocabulary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The vocabulary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-big-picture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The big picture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#agents-and-deputies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agents and deputies
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-two-pass-import-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The two-pass import model
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The two-pass import model">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pass-a-resolve-references-sequential" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pass A — resolve references (sequential)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pass-b-write-rows-concurrent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pass B — write rows (concurrent)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-channel-seam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The channel seam
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The channel seam">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-47-request-handlers-grouped" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The 47 request handlers, grouped
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#depots-and-raw-bulk-sql" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Depots and raw bulk SQL
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#async-in-one-paragraph" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Async, in one paragraph
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tracking-a-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tracking a run
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#source-tree-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Source-tree map
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/flyokai/flyokai/edit/main/fujin-shuttle-docs/docs/concepts.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="concepts-architecture">Concepts &amp; architecture<a class="headerlink" href="#concepts-architecture" title="Permanent link">&para;</a></h1>
+<p>Fujin Shuttle is a high-throughput import/export engine for Shopware 6. This page is the map of
+its architecture and the vocabulary the codebase uses.</p>
+<p>The engine runs <strong>embedded in-process</strong>, but the <code>ServiceRequest</code>/<code>Backend</code> channel seam is kept
+wire-compatible so a remote-cluster variant can be layered on later without rewriting the
+deputies.</p>
+<h2 id="the-vocabulary">The vocabulary<a class="headerlink" href="#the-vocabulary" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Fujin Shuttle class(es)</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Agent</strong></td>
+<td><code>src/DataType/Agent/*</code></td>
+<td>The flyweight selected for one <code>(dataType, transferMode)</code> pair. Owns the run.</td>
+</tr>
+<tr>
+<td><strong>Deputy</strong></td>
+<td><code>src/Deputy/*</code></td>
+<td>The concrete worker for a data type — orchestrates Pass A / Pass B.</td>
+</tr>
+<tr>
+<td><strong>Processor / pipeline</strong></td>
+<td><code>src/Pipeline/*</code>, <code>amp-data-pipeline</code></td>
+<td>Streams and transforms data items (CSV row → batch).</td>
+</tr>
+<tr>
+<td><strong>Batch emitter</strong></td>
+<td><code>BatchEmitter</code> (in <code>fujin-shuttle-message</code>)</td>
+<td>Accumulates rows into batches of N.</td>
+</tr>
+<tr>
+<td><strong>Channel / Backend</strong></td>
+<td><code>src/Channel/*</code></td>
+<td>The request/response seam between deputy and the database layer.</td>
+</tr>
+<tr>
+<td><strong>Request handler</strong></td>
+<td><code>src/Channel/RequestHandler/*</code> (47)</td>
+<td>Executes one kind of <code>ServiceRequest</code>.</td>
+</tr>
+<tr>
+<td><strong>Depot</strong></td>
+<td><code>src/DataDepot/*</code></td>
+<td>The raw bulk-SQL reader/writer for an entity type.</td>
+</tr>
+<tr>
+<td><strong>ID resolver</strong></td>
+<td><code>src/IdResolver/Shopware/*</code></td>
+<td>Resolves codes/names/paths → Shopware UUIDs (and can auto-create).</td>
+</tr>
+</tbody>
+</table>
+<h2 id="the-big-picture">The big picture<a class="headerlink" href="#the-big-picture" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>                    ┌─────────────────────────────────────────────┐
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  CLI / Admin ──►   │  ProfileFacade            (src/Model)        │
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>                    │    builds SystemConfig + Profile + Context   │
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>                    └───────────────┬─────────────────────────────┘
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>                                    ▼
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>                    ┌─────────────────────────────────────────────┐
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>                    │  AgentContainer → DefaultSelector            │
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>                    │    picks + clones the Agent for (type, mode) │
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>                    └───────────────┬─────────────────────────────┘
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>                                    ▼
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>                    ┌─────────────────────────────────────────────┐
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>                    │  Deputy           (src/Deputy)               │
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>                    │    Pass A: resolve all referenced codes      │
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>                    │    Pass B: stream rows → batches             │
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>                    └───────────────┬─────────────────────────────┘
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>                                    ▼  ServiceRequest
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>                    ┌─────────────────────────────────────────────┐
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>                    │  Backend → HandlerRegistry → RequestHandler  │
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>                    │             (src/Channel)                    │
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>                    └───────────────┬─────────────────────────────┘
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>                                    ▼
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>                    ┌─────────────────────────────────────────────┐
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>                    │  Depot            (src/DataDepot)            │
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>                    │    InsertOnDuplicate → bulk SQL on the       │
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>                    │    async / sync connection pool              │
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>                    └─────────────────────────────────────────────┘
+</code></pre></div>
+<h2 id="agents-and-deputies">Agents and deputies<a class="headerlink" href="#agents-and-deputies" title="Permanent link">&para;</a></h2>
+<p>An <strong>agent</strong> is a thin flyweight registered against a <code>(dataType, transferMode)</code> pair (e.g.
+<code>product</code> + <code>import</code>). <code>AgentContainer</code> holds the registry; <code>DefaultSelector</code> matches and
+<strong>clones</strong> the agent for each run so per-run state is isolated. The matching agents are wired in
+<code>Resources/config/services/agent.xml</code> and the per-entity service files.</p>
+<p>The agent delegates the real work to a <strong>deputy</strong> — the class that knows how a particular data
+type is shaped (<code>src/Deputy/ProductImport.php</code>, <code>CategoryImport.php</code>, <code>InventoryImport.php</code>, …).
+The deputy is where Pass A / Pass B live.</p>
+<h2 id="the-two-pass-import-model">The two-pass import model<a class="headerlink" href="#the-two-pass-import-model" title="Permanent link">&para;</a></h2>
+<p>Most imports run in two passes. Take products as the worked example:</p>
+<h3 id="pass-a-resolve-references-sequential">Pass A — resolve references (sequential)<a class="headerlink" href="#pass-a-resolve-references-sequential" title="Permanent link">&para;</a></h3>
+<p>The deputy scans the CSV once and collects every <strong>distinct referenced code</strong>:</p>
+<ul>
+<li>category paths (<code>Home &gt; Furniture &gt; Chairs</code>)</li>
+<li>sales-channel, manufacturer, delivery-time, unit and tax keys</li>
+<li>property <code>Group:Option</code> pairs and custom-field names</li>
+<li>media sources (URLs / paths)</li>
+<li>rule names</li>
+</ul>
+<p>Each set is resolved <strong>once</strong> through an <a href="../csv-reference/#how-references-resolve">ID resolver</a>
+to a <code>code → idBytes</code> map, auto-creating missing targets where the profile allows it
+(categories, property options, custom fields). The maps are held on the deputy as run-wide
+<strong>assets</strong>, so Pass B never does a lookup it can avoid.</p>
+<div class="admonition info">
+<p class="admonition-title">Why a second physical pass is fine</p>
+<p>Re-reading the file is cheap relative to the write work, and the CLI is the large-file
+path. Resolving up front lets Pass B run with foreign-key checks off (all targets already
+exist) and write in big concurrent batches.</p>
+</div>
+<h3 id="pass-b-write-rows-concurrent">Pass B — write rows (concurrent)<a class="headerlink" href="#pass-b-write-rows-concurrent" title="Permanent link">&para;</a></h3>
+<p>The CSV is streamed again. A reader fiber pushes rows into a bounded queue; a
+<a href="../glossary/#batch-emitter"><code>BatchEmitter</code></a> accumulates them into batches (flushing at
+<code>batch_size</code> <strong>or</strong> when the row type changes). Each batch is processed by a worker that:</p>
+<ol>
+<li>looks up IDs from the Pass A asset maps,</li>
+<li>builds the entity / translation / category / visibility / price / property / media rows,</li>
+<li>sends one <code>ServiceRequest</code> <strong>per entity table</strong> through the channel,</li>
+<li>ticks the <a href="#tracking-a-run">run monitor</a> for progress and checks for a stop request.</li>
+</ol>
+<p>Batches run <strong>concurrently</strong> up to the configured <a href="../configuration/"><code>concurrency</code></a> limit.</p>
+<div class="admonition warning">
+<p class="admonition-title">Ordering hazards stay sequential</p>
+<p>Concurrency is only safe for independent batches (products, inventory). Data with intra-file
+ordering dependencies — categories (parent → child), entity metadata (group → option),
+custom-field JSON merges — is processed sequentially regardless of the concurrency setting.</p>
+</div>
+<h2 id="the-channel-seam">The channel seam<a class="headerlink" href="#the-channel-seam" title="Permanent link">&para;</a></h2>
+<p>Deputies never touch the database directly. They send typed <strong><code>ServiceRequest</code></strong> objects to a
+<strong><code>Backend</code></strong>; the local implementation (<code>LocalBackend</code>) looks the request up in a
+<strong><code>HandlerRegistry</code></strong> (a compile-time map of <em>request class → handler service</em>) and dispatches
+to the matching <strong><code>RequestHandler</code></strong>, returning a typed <code>Response</code>. Exceptions are caught and
+returned as an error response, so the seam is wire-compatible with a future remote transport.</p>
+<p>Handlers are registered with the <code>fujin_shuttle.request_handler</code> DI tag, keyed by the request
+class they handle — a profile can add handlers without editing shared files.</p>
+<h3 id="the-47-request-handlers-grouped">The 47 request handlers, grouped<a class="headerlink" href="#the-47-request-handlers-grouped" title="Permanent link">&para;</a></h3>
+<p><code>src/Channel/RequestHandler/</code> holds ~47 handlers. By naming pattern:</p>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Pattern</th>
+<th>What they do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Resolve</strong></td>
+<td><code>Resolve…IdsHandler</code>, <code>ResolveCategoryPathsHandler</code>, <code>ResolveCustomFieldsHandler</code></td>
+<td>Pass A: look up / auto-create FK targets, return <code>code → id</code> maps</td>
+</tr>
+<tr>
+<td><strong>Load</strong></td>
+<td><code>Load…Handler</code></td>
+<td>Export reads (products, variants, categories, inventory, rules, metadata)</td>
+</tr>
+<tr>
+<td><strong>Upsert</strong></td>
+<td><code>…UpsertHandler</code></td>
+<td>Pass B: <code>INSERT … ON DUPLICATE KEY UPDATE</code> into entity + translation tables</td>
+</tr>
+<tr>
+<td><strong>Link</strong></td>
+<td><code>…LinkHandler</code></td>
+<td>Insert into composite-key link tables (<code>product_category</code>, <code>product_media</code>, options)</td>
+</tr>
+<tr>
+<td><strong>Delete</strong></td>
+<td><code>Delete…Handler</code></td>
+<td>Clear stale associations / rule conditions before re-import</td>
+</tr>
+<tr>
+<td><strong>Special</strong></td>
+<td><code>ProductCustomFieldMergeHandler</code>, <code>StockUpdateHandler</code>, <code>RuleConditionInsertHandler</code></td>
+<td>Read-modify-write merges and other one-offs</td>
+</tr>
+</tbody>
+</table>
+<h2 id="depots-and-raw-bulk-sql">Depots and raw bulk SQL<a class="headerlink" href="#depots-and-raw-bulk-sql" title="Permanent link">&para;</a></h2>
+<p>A <strong>depot</strong> (<code>src/DataDepot/&lt;Entity&gt;/ImportDepot.php</code> / <code>ExportDepot.php</code>) is the only place
+that talks SQL. On the write side it builds an <code>INSERT … ON DUPLICATE KEY UPDATE</code> with the bulk
+writer from <code>flyokai/laminas-db-bulk-update</code>, filtering columns the live schema doesn't have
+(forward/backward version compatibility) and excluding immutable columns (<code>id</code>, <code>version_id</code>,
+<code>created_at</code>, …) from the <code>ON DUPLICATE</code> clause. Link tables use <code>INSERT IGNORE</code>.</p>
+<p>On the read (export) side a depot pages through rows with keyset pagination and assembles the
+wide-column shape (scalars + prices + translations + associations) the export agent emits.</p>
+<h2 id="async-in-one-paragraph">Async, in one paragraph<a class="headerlink" href="#async-in-one-paragraph" title="Permanent link">&para;</a></h2>
+<p>Pass B runs on the <strong>Revolt event loop</strong> with a pooled, non-blocking <code>ext-mysqli</code> driver. Each
+batch is a fiber; when its <code>INSERT</code> awaits the network the loop runs another batch's fiber, so
+up to <code>concurrency</code> statements are in flight on a single PHP thread. Foreign-key checks are set
+<strong>off once per pooled link</strong> (Pass A guarantees the targets exist), and the bulk writer skips
+the per-statement FK toggle on async connections — both are documented wins in
+<a href="../PERFORMANCE/">Performance &amp; tuning</a>. The sync/PDO driver (<code>dbDriver = sync</code>) is available as
+a fallback and is byte-identical on output.</p>
+<div class="admonition note">
+<p class="admonition-title">Sync vs async driver</p>
+<p><code>dbDriver</code> (admin config) picks the connection pool. <strong>Async</strong> (default) is faster on a
+networked database, where round-trip latency is hidden across concurrent batches. On a
+localhost database the insert path is MySQL-bound and concurrency barely matters — see the
+flat sweep in <a href="../PERFORMANCE/">Performance</a>.</p>
+</div>
+<h2 id="tracking-a-run">Tracking a run<a class="headerlink" href="#tracking-a-run" title="Permanent link">&para;</a></h2>
+<p>CLI ad-hoc runs (<code>fujin:shuttle:run</code>) are untracked. <strong>Tracked</strong> runs — the admin <strong>Run</strong>
+button, queued <code>RunProfileMessage</code>, and <code>fujin:shuttle:run-profile</code> — flow through a
+<strong>run monitor</strong> that:</p>
+<ul>
+<li>writes throttled progress (<code>processed</code>, <code>progress</code>, <code>phase</code>) and a <code>heartbeat_at</code> liveness
+  stamp to the <code>fujin_job</code> row,</li>
+<li>reads the job <code>status</code>, so flipping it to <code>stopping</code> (the admin <strong>Stop</strong> button) makes the
+  next batch boundary break the loop cooperatively — rows already written are kept,</li>
+<li>lets a <strong>duplicate-run guard</strong> refuse a second concurrent run of the same profile (a stale
+  heartbeat reaps an abandoned job instead of blocking forever).</li>
+</ul>
+<p>Job lifecycle and the exact columns are in <a href="../database/">Database schema</a>.</p>
+<h2 id="source-tree-map">Source-tree map<a class="headerlink" href="#source-tree-map" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/Command/</code></td>
+<td>The four CLI commands</td>
+</tr>
+<tr>
+<td><code>src/Administration/Controller/</code></td>
+<td>Admin REST controller</td>
+</tr>
+<tr>
+<td><code>src/Model/</code></td>
+<td><code>ProfileFacade</code>, <code>ProfileStore</code>, run monitor</td>
+</tr>
+<tr>
+<td><code>src/DataType/</code> + <code>Agent/</code></td>
+<td>Agent registry, selector, agents</td>
+</tr>
+<tr>
+<td><code>src/Deputy/</code></td>
+<td>Per-type deputies (Pass A / Pass B logic)</td>
+</tr>
+<tr>
+<td><code>src/Channel/</code> + <code>RequestHandler/</code></td>
+<td>Backend seam, handler registry, connection pools, 47 handlers</td>
+</tr>
+<tr>
+<td><code>src/DataDepot/</code></td>
+<td>Per-entity bulk SQL depots</td>
+</tr>
+<tr>
+<td><code>src/IdResolver/Shopware/</code></td>
+<td>Code/name/path → UUID resolvers</td>
+</tr>
+<tr>
+<td><code>src/Pipeline/Common/</code></td>
+<td><code>ColumnSpec</code> (header classifier) and pipeline glue</td>
+</tr>
+<tr>
+<td><code>src/Template/</code></td>
+<td><code>TemplateCatalog</code> — downloadable templates/examples</td>
+</tr>
+<tr>
+<td><code>src/Ownership/</code></td>
+<td>Ownership guard seam (marketplace per-seller scoping)</td>
+</tr>
+<tr>
+<td><code>src/Migration/</code></td>
+<td>The four plugin tables + later column adds</td>
+</tr>
+<tr>
+<td><code>src/Resources/config/</code></td>
+<td><code>config.xml</code>, <code>routes.xml</code>, <code>services/*.xml</code></td>
+</tr>
+<tr>
+<td><code>src/Resources/app/administration/</code></td>
+<td>The admin Vue module</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; Flyokai
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.tracking", "navigation.indexes", "toc.follow", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate", "content.action.edit"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
